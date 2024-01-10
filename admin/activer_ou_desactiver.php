@@ -18,9 +18,7 @@ $role = $row_role['id_role'];
 
 // Vérifier que l'utilisateur n'est pas un administrateur (rôle 1)
 if ($role != 1) {
-
       if(mysqli_num_rows($req_condition) > 0){
-
         $sql2="UPDATE utilisateur SET active = 0 WHERE `id_user`= $id_user";
         $req1=mysqli_query($conn, $sql2);
         if($req1){
@@ -36,12 +34,8 @@ if ($role != 1) {
             header("location:utilisateurs.php");
         }
     }
-
-  
 } else {
     header("location: utilisateurs.php");
     $_SESSION['desactive_non_autorise'] = true;
 }
-
-
 ?>
