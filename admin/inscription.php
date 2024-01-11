@@ -73,7 +73,7 @@ if (isset($_SESSION['ajout_reussi']) && $_SESSION['ajout_reussi'] === true) {
     echo "<script>
     Swal.fire({
         title: 'Ajout réussi !',
-        text: 'L\'inscription a été ajouté avec succès.',
+        text: 'L\'inscription a été ajouté avec succès 🎉🎉',
         icon: 'success',
         confirmButtonColor: '#3099d6',
         confirmButtonText: 'OK'
@@ -89,7 +89,7 @@ if (isset($_SESSION['supp_reussi']) && $_SESSION['supp_reussi'] === true) {
     echo "<script>
     Swal.fire({
         title: 'Suppression réussi !',
-        text: 'L\'inscription a été supprimer avec succès.',
+        text: 'L\'inscription a été supprimer avec succès 🎉🎉',
         icon: 'success',
         confirmButtonColor: '#3099d6',
         confirmButtonText: 'OK'
@@ -105,7 +105,7 @@ if (isset($_SESSION['modifier_reussi']) && $_SESSION['modifier_reussi'] === true
     echo "<script>
     Swal.fire({
         title: 'Modification réussi !',
-        text: 'L\'inscription a été modifier avec succès.',
+        text: 'L\'inscription a été modifier avec succès 🎉🎉',
         icon: 'success',
         confirmButtonColor: '#3099d6',
         confirmButtonText: 'OK'
@@ -120,7 +120,7 @@ if (isset($_SESSION['import_reussi']) && $_SESSION['import_reussi'] === true) {
     echo "<script>
     Swal.fire({
         title: 'Importation réussi !',
-        text: 'Le(s) inscription(s) a été importer avec succès.',
+        text: 'Le(s) inscription(s) a été importer avec succès 🎉🎉',
         icon: 'success',
         confirmButtonColor: '#3099d6',
         confirmButtonText: 'OK'
