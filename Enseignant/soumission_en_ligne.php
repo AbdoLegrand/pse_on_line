@@ -200,10 +200,6 @@ else if (isset($_SESSION['archive_reussi_ligne']) && $_SESSION['archive_reussi_l
 
 <script>
 
-    
-
-
-
 var liensArchiver = document.querySelectorAll("#archiver");
 
 // Parcourir chaque lien d'archivage et ajouter un écouteur d'événements

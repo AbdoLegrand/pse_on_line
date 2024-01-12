@@ -90,10 +90,11 @@ if (isset($_POST['button'])) {
                     $sql2 = "INSERT INTO `fichiers_soumission` (`id_sous`, `nom_fichier`, `chemin_fichier`) VALUES ($id_sous, '$file_name', '$destination')";
                     $req2 = mysqli_query($conn, $sql2);
                     if ($req1 and $req2) {
-                        $sql_tou = "SELECT * FROM `inscription` WHERE inscription.id_matiere='$id_matiere'";
-                        $req_tou = mysqli_query($conn, $sql_tou);
-                        header("location:soumission_en_ligne.php");
+                        // $sql_tou = "SELECT * FROM `inscription` WHERE inscription.id_matiere='$id_matiere'";
+                        // $req_tou = mysqli_query($conn, $sql_tou);
                         $_SESSION['ajout_reussi'] = true;
+
+                        header("location:soumission_en_ligne.php");
                     }
                 }
             }
