@@ -243,11 +243,35 @@ if (mysqli_num_rows($req) == 0) {
                 $_SESSION['autorisation'] = false;
                 unset($_SESSION['autorisation']);
                 $_SESSION['ajout_reussi'] = true;
-                header("location:soumission_etu.php?id_sous=$id_sous&id_matiere=$id_matiere&color=$color&id_semestre=$id_semestre");
+?>
+ 
+  
+<?php               
+
+                echo "<script>
+                Swal.fire({
+                    title: 'Archive réussi !',
+                    text: 'La soumission a été archiver avec succès.',
+                    icon: 'success',
+                    confirmButtonColor: '#3099d6',
+                    confirmButtonText: 'OK'
+                });
+                </script>";
+            header("location:soumission_etu.php?id_sous=$id_sous&id_matiere=$id_matiere&color=$color&id_semestre=$id_semestre");
+
             } else {
                 echo "il y'a un erreur ! ";
             }
         } else {
+            echo "<script>
+            Swal.fire({
+                title: 'Archive réussi !',
+                text: 'La soumission a été archiver avec succès.',
+                icon: 'success',
+                confirmButtonColor: '#3099d6',
+                confirmButtonText: 'OK'
+            });
+            </script>";
             header("location:soumission_etu.php?id_sous=$id_sous&id_matiere=$id_matiere&color=$color&id_semestre=$id_semestre");
             $_SESSION['temp_finni'] = true;
         }
@@ -343,8 +367,9 @@ if (mysqli_num_rows($req) == 0) {
                 <div class="form-group">
                     <div class="col-md-12" style="display: flex; justify-content: space-between;">
                         <input type="submit" name="button" value="Enregistrer" class="btn btn-primary" />
-                        <button type="submit" name="confirmer" id="conf" class="btn btn-gradient-danger btn-icon-text"><i class="mdi mdi-upload btn-icon-prepend"></i> Envoyer ton travail</button>
-                    </div>
+                        <button type="submit" name="confirmer" id="confirmer"  class="btn btn-gradient-danger btn-icon-text" onclick="showConfirmationAlert()">
+  <i class="mdi mdi-upload btn-icon-prepend"></i> Envoyer ton travail
+                        </button>                   </div>
                 </div>
 
             </div>
@@ -352,32 +377,10 @@ if (mysqli_num_rows($req) == 0) {
         </div>
     </div>
     </div>
-    <script>
 
-var liensArchiver = document.querySelectorAll("#conf");
 
-// Parcourir chaque lien d'archivage et ajouter un écouteur d'événements
-liensArchiver.forEach(function(lien) {
-  lien.addEventListener("click", function(event) {
-    event.preventDefault();
-    Swal.fire({
-      title: "Voulez-vous vraiment Envoyer ton travail ?",
-      text: "",
-      icon: "question",
-      showCancelButton: true,
-      confirmButtonColor: "#3099d6",
-      cancelButtonColor: "#d33",
-      cancelButtonText: "Annuler",
-      confirmButtonText: "Archiver"
-    }).then((result) => {
-      if (result.isConfirmed) {
-       
-            window.location.href = this.href; 
-          }
-        });
-      });
-    });
-  </script>
+
+
 <?php
     if (isset($_SESSION['suppression_reussi']) && $_SESSION['suppression_reussi'] === true) {
         echo "<script>
