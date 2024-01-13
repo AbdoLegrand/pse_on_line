@@ -14,9 +14,6 @@ include "nav_bar.php";
 ?>
 
 <title>Detaille de la soumission</title>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-<script src="../JS/sweetalert2.js"></script>
 
 <?php
 include_once "../connexion.php";
@@ -312,7 +309,7 @@ $row = mysqli_fetch_assoc($req);
             echo "<script>
                     Swal.fire({
                         title: 'Ajout réussi !',
-                        text: 'La réponse a été ajouté avec succès.',
+                        text: 'Votre réponse a été envoyer avec succès.',
                         icon: 'success',
                         confirmButtonColor: '#3099d6',
                         confirmButtonText: 'OK'

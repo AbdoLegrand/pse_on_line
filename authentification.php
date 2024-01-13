@@ -2,13 +2,9 @@
 include_once("controller.php");
 ?>
 <title>Connexion</title>
-<!-- Liens pour SweetAlert2 -->
-<script src="JS/sweetalert2.js"></script>
 
-<!-- <span id="element"></span> -->
+<script src="/node_modules/sweetalert2/dist/sweetalert2.all.min.js"></script>
 
-<!-- bibliothèque d'animation du texte  -->
-<script src="JS/typed.umd.js"></script>
 
 <div class="container-scroller">
     <div class="container-fluid page-body-wrapper full-page-wrapper">
@@ -60,3 +56,25 @@ include_once("controller.php");
         </div>
     </div>
 </div>
+
+
+
+<?php
+
+
+if (isset($_SESSION['cree_reussi']) && $_SESSION['cree_reussi'] === true) {
+  echo "<script>
+  Swal.fire({
+      title: 'Création réussi !',
+      text: 'Félicitations ! Votre compte a été créé avec succès 🎉🎉',
+      icon: 'success',
+      confirmButtonColor: '#3099d6',
+      confirmButtonText: 'OK'
+  });
+  </script>";
+
+  // Supprimer l'indicateur de succès de la session
+  unset($_SESSION['cree_reussi']);
+}
+
+?>

@@ -162,109 +162,107 @@ if (mysqli_num_rows($req) == 0) {
                 </div>
             </div>
         </div>
-        <?php
+    <?php
 
 
-    } else {
-        function test_input($data)
-        {
-            $data = htmlspecialchars($data);
-            $data = trim($data);
-            $data = htmlentities($data);
-            $data = stripcslashes($data);
-            return $data;
-        }
+} else {
+    function test_input($data)
+    {
+        $data = htmlspecialchars($data);
+        $data = trim($data);
+        $data = htmlentities($data);
+        $data = stripcslashes($data);
+        return $data;
+    }
 
-        if (isset($_POST['button'])) {
-            $req_detail3 = "SELECT  *   FROM soumission   WHERE id_sous = $id_sous and (status=0 or status=1)  and date_fin > NOW()  ";
-            $req3 = mysqli_query($conn, $req_detail3);
-            if (mysqli_num_rows($req3) > 0) {
-                $descri = test_input($_POST['description_sous']);
-                $files = $_FILES['file'];
-                if (!empty($descri) or !empty($files)) {
-                    $sql = "UPDATE reponses set description_rep = '$descri' ,  `date` = NOW() where id_sous = $id_sous and id_etud=(select id_etud from etudiant where email = '$email') ";
-
-                    $req1 = mysqli_query($conn, $sql);
-
-                    $id_rep = mysqli_insert_id($conn);
-                    foreach ($files['tmp_name'] as $key => $tmp_name) {
-                        $file_name = $files['name'][$key];
-                        $file_tmp = $files['tmp_name'][$key];
-                        $file_size = $files['size'][$key];
-                        $file_error = $files['error'][$key];
-                        $file_ext = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
-
-                        if ($file_error === 0) {
-                            $new_file_name = uniqid('', true) . '.' . $file_ext;
-
-                            $sql3 = "SELECT matricule FROM etudiant WHERE etudiant.email = '$email'";
-                            $code_matiere_result = mysqli_query($conn, $sql3);
-                            $row = mysqli_fetch_assoc($code_matiere_result);
-                            $matricule = $row['matricule'];
-                            $matricule_directory = '../files/reponses/' . $matricule;
-
-                            // Créer le dossier s'il n'exist pas
-                            if (!is_dir($matricule_directory)) {
-                                mkdir($matricule_directory, 0777, true);
-                            }
-
-                            // Chemin complet 
-                            $destination = $matricule_directory . '/' . $new_file_name;
-                            move_uploaded_file($file_tmp, $destination);
-
-                            // Insérer les info dans la base de donnéez
-                            $sql2 = "INSERT INTO `fichiers_reponses` (`id_rep`, `nom_fichiere`, `chemin_fichiere`) VALUES ((SELECT reponses.id_rep FROM reponses,etudiant WHERE reponses.id_etud=etudiant.id_etud and email='$email' and reponses.id_sous=$id_sous), '$file_name', '$destination')";
-                            $req2 = mysqli_query($conn, $sql2);
-
-
-                            if ($req1 && $req2) {
-                                // unset($_SESSION['autorisation']);
-                                $_SESSION['ajout_reussi'] = true;
-                                header("location:reponse_etudiant.php?id_sous=$id_sous&id_matiere=$id_matiere&color=$color&id_semestre=$id_semestre");
-                            } else {
-                                mysqli_connect_error();
-                            }
-                        }
-                    }
-                }
-            } else {
-                $_SESSION['id_sous'] = $id_sous;
-                header("location:soumission_etu.php?id_sous=$id_sous&id_matiere=$id_matiere&color=$color&id_semestre=$id_semestre");
-                $_SESSION['temp_finni'] = true;
-            }
-        }
-
-        if (isset($_POST['confirmer'])) {
-            $req_detail3 = "SELECT  *   FROM soumission   WHERE id_sous = $id_sous and (status=0 or status=1)  and date_fin > NOW()  ";
-            $req3 = mysqli_query($conn, $req_detail3);
-            if (mysqli_num_rows($req3) > 0) {
-                $sql = "UPDATE reponses set   `date` = NOW() ,confirmer = 1 where id_sous = $id_sous and id_etud=(select id_etud from etudiant where email = '$email') ";
+    if (isset($_POST['button'])) {
+        $req_detail3 = "SELECT  *   FROM soumission   WHERE id_sous = $id_sous and (status=0 or status=1)  and date_fin > NOW()  ";
+        $req3 = mysqli_query($conn, $req_detail3);
+        if (mysqli_num_rows($req3) > 0) {
+            $descri = test_input($_POST['description_sous']);
+            $files = $_FILES['file'];
+            if (!empty($descri) or !empty($files)) {
+                $sql = "UPDATE reponses set description_rep = '$descri' ,  `date` = NOW() where id_sous = $id_sous and id_etud=(select id_etud from etudiant where email = '$email') ";
 
                 $req1 = mysqli_query($conn, $sql);
 
-                if ($req1) {
-                    $_SESSION['autorisation'] = false;
-                    unset($_SESSION['autorisation']);
-                    $_SESSION['ajout_reussi'] = true;
-        ?>
-        <?php
-                    header("location:soumission_etu.php?id_sous=$id_sous&id_matiere=$id_matiere&color=$color&id_semestre=$id_semestre");
-                } else {
-                    echo "il y'a un erreur ! ";
+                $id_rep = mysqli_insert_id($conn);
+                foreach ($files['tmp_name'] as $key => $tmp_name) {
+                    $file_name = $files['name'][$key];
+                    $file_tmp = $files['tmp_name'][$key];
+                    $file_size = $files['size'][$key];
+                    $file_error = $files['error'][$key];
+                    $file_ext = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
+
+                    if ($file_error === 0) {
+                        $new_file_name = uniqid('', true) . '.' . $file_ext;
+
+                        $sql3 = "SELECT matricule FROM etudiant WHERE etudiant.email = '$email'";
+                        $code_matiere_result = mysqli_query($conn, $sql3);
+                        $row = mysqli_fetch_assoc($code_matiere_result);
+                        $matricule = $row['matricule'];
+                        $matricule_directory = '../files/reponses/' . $matricule;
+
+                        // Créer le dossier s'il n'exist pas
+                        if (!is_dir($matricule_directory)) {
+                            mkdir($matricule_directory, 0777, true);
+                        }
+
+                        // Chemin complet 
+                        $destination = $matricule_directory . '/' . $new_file_name;
+                        move_uploaded_file($file_tmp, $destination);
+
+                        // Insérer les info dans la base de donnéez
+                        $sql2 = "INSERT INTO `fichiers_reponses` (`id_rep`, `nom_fichiere`, `chemin_fichiere`) VALUES ((SELECT reponses.id_rep FROM reponses,etudiant WHERE reponses.id_etud=etudiant.id_etud and email='$email' and reponses.id_sous=$id_sous), '$file_name', '$destination')";
+                        $req2 = mysqli_query($conn, $sql2);
+
+
+                        if ($req1 && $req2) {
+                            // unset($_SESSION['autorisation']);
+                            $_SESSION['ajout_reussi'] = true;
+                            header("location:reponse_etudiant.php?id_sous=$id_sous&id_matiere=$id_matiere&color=$color&id_semestre=$id_semestre");
+                        } else {
+                            mysqli_connect_error();
+                        }
+                    }
                 }
-            } else {
-                header("location:soumission_etu.php?id_sous=$id_sous&id_matiere=$id_matiere&color=$color&id_semestre=$id_semestre");
-                $_SESSION['temp_finni'] = true;
             }
+        } else {
+            $_SESSION['id_sous'] = $id_sous;
+            header("location:soumission_etu.php?id_sous=$id_sous&id_matiere=$id_matiere&color=$color&id_semestre=$id_semestre");
+            $_SESSION['temp_finni'] = true;
         }
+    }
 
-        include "nav_bar.php";
+    if (isset($_POST['confirmer'])) {
+        $req_detail3 = "SELECT  *   FROM soumission   WHERE id_sous = $id_sous and (status=0 or status=1)  and date_fin > NOW()  ";
+        $req3 = mysqli_query($conn, $req_detail3);
+        if (mysqli_num_rows($req3) > 0) {
+            $sql = "UPDATE reponses set   `date` = NOW() ,confirmer = 1 where id_sous = $id_sous and id_etud=(select id_etud from etudiant where email = '$email') ";
 
-        $sql = "SELECT * FROM reponses  WHERE  id_sous = '$id_sous' and id_etud = (select id_etud from etudiant where email = '$email')";
-        $req1 = mysqli_query($conn, $sql);
-        $row = mysqli_fetch_assoc($req1);
+            $req1 = mysqli_query($conn, $sql);
 
-        ?>
+            if ($req1) {
+                $_SESSION['autorisation'] = false;
+                unset($_SESSION['autorisation']);
+                $_SESSION['ajout_reussi'] = true;
+                header("location:soumission_etu.php?id_sous=$id_sous&id_matiere=$id_matiere&color=$color&id_semestre=$id_semestre");
+            } else {
+                echo "Il y'a un erreur lors de confirmation de réponse ! ";
+            }
+        } else {
+            header("location:soumission_etu.php?id_sous=$id_sous&id_matiere=$id_matiere&color=$color&id_semestre=$id_semestre");
+            $_SESSION['temp_finni'] = true;
+        }
+    }
+
+    include "nav_bar.php";
+
+    $sql = "SELECT * FROM reponses  WHERE  id_sous = '$id_sous' and id_etud = (select id_etud from etudiant where email = '$email')";
+    $req1 = mysqli_query($conn, $sql);
+    $row = mysqli_fetch_assoc($req1);
+
+    ?>
         <div class="content-wrapper">
             <div class="content">
 
@@ -392,11 +390,15 @@ if (mysqli_num_rows($req) == 0) {
         ?>
 
         <script>
-            var liensConfirmer = document.querySelectorAll("#confirmer");
+            document.addEventListener("DOMContentLoaded", function() {
+                var boutonSoumission = document.querySelector(".btn.btn-gradient-danger");
+                var boutonConfirmer = document.querySelector("#confirmer");
 
-            liensConfirmer.forEach(function(lien) {
-                lien.addEventListener("click", function(event) {
+                console.log(boutonSoumission);
+
+                boutonConfirmer.addEventListener("click", function(event) {
                     event.preventDefault();
+
                     Swal.fire({
                         title: "Voulez-vous vraiment confirmer votre travail ?",
                         text: "",
@@ -408,15 +410,13 @@ if (mysqli_num_rows($req) == 0) {
                         confirmButtonText: "Confirmer"
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            Swal.fire({
-                                title: "Confirmation !",
-                                text: "Votre travail a été confirmé avec succès 🎉🎉",
-                                icon: "success"
-                            });
+                            // L'utilisateur a confirmé, déclencher la soumission du formulaire
+                            boutonSoumission.click();
                         }
                     });
                 });
             });
+
 
             var liensSupprimer = document.querySelectorAll("#supprimer");
 
@@ -443,5 +443,5 @@ if (mysqli_num_rows($req) == 0) {
         </script>
 
     <?php
-    }
+}
     ?>

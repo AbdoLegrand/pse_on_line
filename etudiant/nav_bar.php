@@ -6,22 +6,26 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="stylesheet" href="../assets/vendors/mdi/css/materialdesignicons.min.css">
-  <link rel="stylesheet" href="../assets/vendors/css/vendor.bundle.base.css">
+  <!-- <link rel="stylesheet" href="../assets/vendors/css/vendor.bundle.base.css"> -->
   <!-- Styles de mise en page -->
   <link rel="stylesheet" href="../assets/css/style.css">
   <!-- Fin des styles de mise en page -->
   <link rel="shortcut icon" href="../assets/images/favicon.ico" />
 
   <!-- css for table-data -->
-  <link rel="stylesheet" type="text/css" href="CSS/dataTables.bootstrap4.min.css">
+  <!-- <link rel="stylesheet" type="text/css" href="CSS/dataTables.bootstrap4.min.css">
   <link rel="stylesheet" href="CSS/data_table.css">
-  <link rel="stylesheet" href="CSS/data_table_boostrapp.css">
+  <link rel="stylesheet" href="CSS/data_table_boostrapp.css"> -->
   <!-- end css for table-data -->
+
+  <!-- CSS DataTables -->
+  <link rel="stylesheet" type="text/css" href="../node_modules/datatables.net-bs4/css/dataTables.bootstrap4.css">
+
 
 
   <script src="../node_modules/sweetalert2/dist/sweetalert2.all.min.js"></script>
 
-<style>
+  <style>
     .logo {
       display: flex;
       align-items: center;
@@ -120,7 +124,7 @@
             <i class="mdi mdi-clipboard-text menu-icon"></i>
           </a>
         </li>
-        
+
 
 
       </ul>
@@ -147,9 +151,18 @@
 
 
     <!-- JS for table-data -->
-    <script src="JS/jquery-3.5.1.min.js"></script>
+    <!-- <script src="JS/jquery-3.5.1.min.js"></script>
     <script type="text/javascript" charset="utf8" src="JS/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" charset="utf8" src="JS/dataTables.bootstrap4.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="JS/dataTables.bootstrap4.min.js"></script> -->
+
+
+    <!-- jQuery -->
+    <script type="text/javascript" src="../node_modules/jquery/dist/jquery.js"></script>
+
+    <!-- DataTables JavaScript -->
+    <script type="text/javascript" src="../node_modules/datatables.net/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="../node_modules/datatables.net-bs4/js/dataTables.bootstrap4.js"></script>
+
 
     <script>
       $(document).ready(function() {
