@@ -234,27 +234,6 @@ if (mysqli_num_rows($req) == 0) {
         }
     }
 
-    if (isset($_POST['confirmer'])) {
-        $req_detail3 = "SELECT  *   FROM soumission   WHERE id_sous = $id_sous and (status=0 or status=1)  and date_fin > NOW()  ";
-        $req3 = mysqli_query($conn, $req_detail3);
-        if (mysqli_num_rows($req3) > 0) {
-            $sql = "UPDATE reponses set   `date` = NOW() ,confirmer = 1 where id_sous = $id_sous and id_etud=(select id_etud from etudiant where email = '$email') ";
-
-            $req1 = mysqli_query($conn, $sql);
-
-            if ($req1) {
-                $_SESSION['autorisation'] = false;
-                unset($_SESSION['autorisation']);
-                $_SESSION['ajout_reussi'] = true;
-                header("location:soumission_etu.php?id_sous=$id_sous&id_matiere=$id_matiere&color=$color&id_semestre=$id_semestre");
-            } else {
-                echo "Il y'a un erreur lors de confirmation de réponse ! ";
-            }
-        } else {
-            header("location:soumission_etu.php?id_sous=$id_sous&id_matiere=$id_matiere&color=$color&id_semestre=$id_semestre");
-            $_SESSION['temp_finni'] = true;
-        }
-    }
 
     include "nav_bar.php";
 
@@ -346,9 +325,10 @@ if (mysqli_num_rows($req) == 0) {
                         <div class="form-group">
                             <div class="col-md-12" style="display: flex; justify-content: space-between;">
                                 <input type="submit" name="button" value="Enregistrer" class="btn btn-primary" />
-                                <button type="submit" name="confirmer" id="confirmer" class="btn btn-gradient-danger btn-icon-text">
+
+                                <a href="confirmer.php?id_sous=<?php echo $row['id_sous']?>&id_matiere=<?=$id_matiere?>&color=<?=$color?>&id_semestre=<?php echo $id_semestre; ?>"  id="confirmer" class="btn btn-gradient-danger btn-icon-text">
                                     <i class="mdi mdi-upload btn-icon-prepend"></i> Envoyer ton travail
-                                </button>
+                                </a>
                             </div>
                         </div>
 
@@ -357,7 +337,7 @@ if (mysqli_num_rows($req) == 0) {
                 </div>
             </div>
         </div>
-        <?php
+    <?php
         if (isset($_SESSION['suppression_reussi']) && $_SESSION['suppression_reussi'] === true) {
             echo "<script>
             Swal.fire({
@@ -390,18 +370,19 @@ if (mysqli_num_rows($req) == 0) {
         ?>
 
         <script>
-            document.addEventListener("DOMContentLoaded", function() {
-                var boutonSoumission = document.querySelector(".btn.btn-gradient-danger");
-                var boutonConfirmer = document.querySelector("#confirmer");
 
-                console.log(boutonSoumission);
 
-                boutonConfirmer.addEventListener("click", function(event) {
+
+            
+            var liensConfirmer = document.querySelectorAll("#confirmer");
+
+            // Parcourir chaque lien d'archivage et ajouter un écouteur d'événements
+            liensConfirmer.forEach(function(lien) {
+                lien.addEventListener("click", function(event) {
                     event.preventDefault();
-
                     Swal.fire({
                         title: "Voulez-vous vraiment confirmer votre travail ?",
-                        text: "",
+                        text: "Une fois que vous aurez confirmé votre travail, vous ne pourrez pas revenir en arrière. Êtes-vous sûr de vouloir procéder ?",
                         icon: "question",
                         showCancelButton: true,
                         confirmButtonColor: "#3099d6",
@@ -410,8 +391,7 @@ if (mysqli_num_rows($req) == 0) {
                         confirmButtonText: "Confirmer"
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            // L'utilisateur a confirmé, déclencher la soumission du formulaire
-                            boutonSoumission.click();
+                            window.location.href = this.href;
                         }
                     });
                 });
@@ -444,4 +424,4 @@ if (mysqli_num_rows($req) == 0) {
 
     <?php
 }
-    ?>
+?>

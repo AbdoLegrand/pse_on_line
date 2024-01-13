@@ -1,6 +1,8 @@
 <?php
 session_start();
 $id_matiere = $_GET['id_matiere'];
+$id_semestre = $_GET['id_semestre'];
+
 $color = $_GET['color'];
 $email = $_SESSION['email'];
 if ($_SESSION["role"] != "etudiant") {
@@ -70,7 +72,7 @@ if (mysqli_num_rows($req3) > 0) {
                     if ($req) {
                         $id_matiere = $_GET['id_matiere'];
                         $color = $_GET['color'];
-                        header("location:soumission_etu.php?id_sous=$id_sous&id_matiere=$id_matiere&color=$color");
+                        header("location:soumission_etu.php?id_sous=$id_sous&id_matiere=$id_matiere&color=$color&id_semestre=$id_semestre");
                         $_SESSION['demande_reussi'] = true;
                     } else {
                         $message = "Démande n'est pas envoyé";
@@ -131,7 +133,7 @@ if (mysqli_num_rows($req3) > 0) {
                         </p>
                         <form action="" method="POST" class="forms-sample">
                             <input type="hidden" name="email" value="<?php echo $row_personne_contacte['person_contact'] ?>" class="form-control">
-                            <input type="hidden" name="subject" value="<?php echo "L'étudiant ".$row['nom']."de matricule  ". "(".$row['matricule'].")". "demander des modifications " ?>">
+                            <input type="hidden" name="subject" value="<?php echo " ".$row['nom'].$row['prenom']."  ". "(".$row['matricule'].")". " demande de faire une modification " ?>">
                             <div class="form-group">
                                 <label>Justification : </label>
                                 <div class="col-md-12">
