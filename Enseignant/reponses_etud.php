@@ -86,7 +86,10 @@ $row2 = mysqli_fetch_assoc($req2);
 
         <div class="card-body" style="display: flex ; justify-content: space-between;">
                 <div>
-                    <a href="list_etudiant.php?id_matiere=<?= $row_sous['id_matiere'] ?>&id_sous=<?= $id_sous ?>" class="btn btn-gradient-primary">Liste des étudiants inscrits</a>
+                <a href="list_etudiant.php?id_matiere=<?= $row_sous['id_matiere'] ?>&id_sous=<?= $id_sous ?>" class="btn btn-gradient-primary">Liste des étudiants inscrits</a>
+                </div>
+                <div>
+                <a href="telecharger_tout_fichier.php?id_sous=<?= $id_sous ?>" class="btn btn-gradient-primary">Télécharger tous les travaux</a>
                 </div>
                 
         <?php if (mysqli_num_rows($req_affichage) > 0) { ?>
