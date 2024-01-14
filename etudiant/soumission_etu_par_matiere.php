@@ -116,7 +116,6 @@ $id_semestre = $_GET['id_semestre'];
                                     </div>
                                     <div >
                                         <p class="m-0"><?= $rot['nom'] . " " . $rot['prenom'] ?> a publié un nouveau <?= $row['titre_sous'] ?> </p>
-                                        <p style="margin: 0%;">Description : <?= $row['description_sous']  ?> </p>
 
                                         <p style="margin: 0%;">De &nbsp;<?= $row['date_debut'] ?> &nbsp; à &nbsp; <?= $row['date_fin']  ?> </p>
                                     </div>
