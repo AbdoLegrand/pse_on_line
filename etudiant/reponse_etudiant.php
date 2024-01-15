@@ -42,14 +42,20 @@ if (mysqli_num_rows($req) == 0) {
     }
 
     if (isset($_POST['button'])) {
+        
 
         $req_detail3 = "SELECT  *   FROM soumission   WHERE id_sous = $id_sous and (status=0 or status=1)  and date_fin > NOW()  ";
         $req3 = mysqli_query($conn, $req_detail3);
+       
+
         if (mysqli_num_rows($req3) > 0) {
+            
             $descri = test_input($_POST['description_sous']);
             $files = $_FILES['file'];
             if (!empty($descri) or !empty($files)) {
-                $sql = "INSERT INTO `reponses`(`description_rep`, `id_sous`, `id_etud`) VALUES('$descri','$id_sous',(select id_etud from etudiant where email = '$email')) ";
+                date_default_timezone_set('GMT');
+                $date = gmdate('Y-m-d H:i:s');
+                $sql = "INSERT INTO `reponses`(`description_rep`,`date`, `id_sous`, `id_etud`) VALUES('$descri',$date,'$id_sous',(select id_etud from etudiant where email = '$email')) ";
 
                 $req1 = mysqli_query($conn, $sql);
 

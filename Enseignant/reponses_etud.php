@@ -210,6 +210,23 @@ $row2 = mysqli_fetch_assoc($req2);
         </div>
 
 
+        <div class="card-body" style="display: flex ; justify-content: space-between;">
+                <div>
+                <a href="list_etudiant.php?id_matiere=<?= $row_sous['id_matiere'] ?>&id_sous=<?= $id_sous ?>" class="btn btn-gradient-primary">Liste des étudiants inscrits</a>
+                </div>
+                <div>
+                <a href="telecharger_tout_fichier.php?id_sous=<?= $id_sous ?>" class="btn btn-gradient-primary">Télécharger tous les travaux</a>
+                </div>
+                
+        <?php if (mysqli_num_rows($req_affichage) > 0) { ?>
+                <div>
+                    <a href="exporter_note.php?id_sous=<?= $id_sous ?>&id_matiere=<?= $row_sous['id_matiere'] ?>" class="btn btn-primary">Exporter les notes</a>
+                </div>
+                <div>
+                    <form action="" method="POST">
+                        <input type="submit" class="btn btn-gradient-primary ml-25" value="Envoyer les Notes" name="enoyer_note">
+                    </form>
+                </div>
         <?php
         // if (isset($_SESSION['exporte_ressi']) && $_SESSION['exporte_ressi'] === true) {
         //     echo " <script>

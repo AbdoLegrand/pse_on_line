@@ -16,7 +16,9 @@ $id_semestre = $_GET['id_semestre'];
 $req_detail3 = "SELECT  *   FROM soumission   WHERE id_sous = $id_sous and (status=0 or status=1)  and date_fin > NOW()  ";
 $req3 = mysqli_query($conn, $req_detail3);
 if (mysqli_num_rows($req3) > 0) {
-    $sql = "UPDATE reponses set   `date` = NOW() ,confirmer = 1 where id_sous = $id_sous and id_etud=(select id_etud from etudiant where email = '$email') ";
+    date_default_timezone_set('GMT');
+    $date = gmdate('Y-m-d H:i:s');
+    $sql = "UPDATE reponses set   `date` = $date ,confirmer = 1 where id_sous = $id_sous and id_etud=(select id_etud from etudiant where email = '$email') ";
 
     $req1 = mysqli_query($conn, $sql);
 
