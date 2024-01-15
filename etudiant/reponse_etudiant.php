@@ -326,7 +326,7 @@ if (mysqli_num_rows($req) == 0) {
                             <div class="col-md-12" style="display: flex; justify-content: space-between;">
                                 <input type="submit" name="button" value="Enregistrer" class="btn btn-primary" />
 
-                                <a href="confirmer.php?id_sous=<?php echo $row['id_sous']?>&id_matiere=<?=$id_matiere?>&color=<?=$color?>&id_semestre=<?php echo $id_semestre; ?>"  id="confirmer" class="btn btn-gradient-danger btn-icon-text">
+                                <a href="confirmer.php?id_sous=<?php echo $row['id_sous'] ?>&id_matiere=<?= $id_matiere ?>&color=<?= $color ?>&id_semestre=<?php echo $id_semestre; ?>" id="confirmer" class="btn btn-gradient-danger btn-icon-text">
                                     <i class="mdi mdi-upload btn-icon-prepend"></i> Envoyer ton travail
                                 </a>
                             </div>
@@ -337,7 +337,7 @@ if (mysqli_num_rows($req) == 0) {
                 </div>
             </div>
         </div>
-    <?php
+        <?php
         if (isset($_SESSION['suppression_reussi']) && $_SESSION['suppression_reussi'] === true) {
             echo "<script>
             Swal.fire({
@@ -370,10 +370,6 @@ if (mysqli_num_rows($req) == 0) {
         ?>
 
         <script>
-
-
-
-            
             var liensConfirmer = document.querySelectorAll("#confirmer");
 
             // Parcourir chaque lien d'archivage et ajouter un écouteur d'événements
@@ -424,4 +420,4 @@ if (mysqli_num_rows($req) == 0) {
 
     <?php
 }
-?>
+    ?>

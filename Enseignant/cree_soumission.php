@@ -7,7 +7,7 @@ if ($_SESSION["role"] != "ens") {
 // $verif_dat="";
 
 include_once "../connexion.php";
-$id_sem=$_SESSION['id_semestre'];
+$id_sem = $_SESSION['id_semestre'];
 $semestre = "SELECT matiere.*, enseigner.*, enseignant.* FROM matiere, enseigner, enseignant 
     WHERE matiere.id_matiere = enseigner.id_matiere AND
     enseigner.id_ens = enseignant.id_ens AND email='$email' and matiere.id_semestre=$id_sem";
@@ -47,8 +47,8 @@ if (isset($_POST['button'])) {
     $dateTime = new DateTime($date_fin);
     $date_fin_justifie = $dateTime->format('Y-m-d H:i:s');
 
-    if(strtotime($date_fin_justifie) < strtotime($date)  ){
-        $message = "veuillez verifier les dates !";
+    if (strtotime($date_fin_justifie) < strtotime($date)) {
+        $message = "Veuillez verifier les dates !";
     } else {
 
         // Vérifiez si la date de début est supérieure ou égale à la date de fin
@@ -89,18 +89,46 @@ if (isset($_POST['button'])) {
                     // Insérer les infos dans la base de données
                     $sql2 = "INSERT INTO `fichiers_soumission` (`id_sous`, `nom_fichier`, `chemin_fichier`) VALUES ($id_sous, '$file_name', '$destination')";
                     $req2 = mysqli_query($conn, $sql2);
-                    if ($req1 and $req2) {
-                        // $sql_tou = "SELECT * FROM `inscription` WHERE inscription.id_matiere='$id_matiere'";
-                        // $req_tou = mysqli_query($conn, $sql_tou);
-                        $_SESSION['ajout_reussi'] = true;
 
-                        header("location:soumission_en_ligne.php");
+                    if ($req1 and $req2){
+                        $sql_tou = "SELECT * FROM `inscription` WHERE inscription.id_matiere='$id_matiere'";
+                        $req_tou = mysqli_query($conn, $sql_tou);
+                        while ($row_tou = mysqli_fetch_assoc($req_tou)) {
+                            $id_etud = $row_tou['id_etud'];
+                            $sql_tout = "SELECT * FROM `etudiant` where id_etud=$id_etud";
+                            $req_tout = mysqli_query($conn, $sql_tout);
+                            $row_tout = mysqli_fetch_assoc($req_tout);
+                            $subject = "Nouvelle annonce :  $titre ";
+                            
+                        
+                            $message = " $descri \n\n De $date_debut_justifie  à  $date_fin_justifie" ;
+                        
+                            $url =  "https://script.google.com/macros/s/AKfycbz1KWjBC8wx3Ay9fYYg6pW_1dcS-07rYT07Xxq0SscKOgUXpiPcq5zqgfTsR7PZFr4j/exec";
+                            $ch = curl_init($url);
+                            curl_setopt_array($ch, [
+                                CURLOPT_RETURNTRANSFER => true,
+                                CURLOPT_FOLLOWLOCATION => true,
+                                CURLOPT_POSTFIELDS => http_build_query([
+                                    "recipient" => $row_tout['matricule'],
+                                    "subject"   => $subject,
+                                    "body"      => $message
+                                ])
+                            ]); 
+
+                            $result = curl_exec($ch);
+                        }
+                        
+                        if ($result) {
+                            header("location:soumission_en_ligne.php");
+                            $_SESSION['ajout_reussi'] = true;
+                        }
                     }
                 }
             }
         }
     }
 }
+
 
 include "nav_bar.php";
 ?>
@@ -206,6 +234,7 @@ include "nav_bar.php";
                             <input type="submit" name="button" value="Enregistrer" class="btn btn-gradient-primary me-2" />
                         </div>
                     </div>
+
                 </form>
                 </div>
             </div>

@@ -60,8 +60,6 @@ include_once("controller.php");
 
 
 <?php
-
-
 if (isset($_SESSION['cree_reussi']) && $_SESSION['cree_reussi'] === true) {
   echo "<script>
   Swal.fire({
